@@ -3,38 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/style.css" >
-    <title>Pawwfee</title>
+    <link rel="stylesheet" href="styles/HomeStyles.css" >
+    <title>Главная</title>
 </head>
 <body>
-    <header>
-        <a href="Index.html"><h1>Pawffee</h1></a>
-        <nav>
-            <ul>
-                <li><a href="#">Главная</a></li>
-                <li><a href="#">Каталог</a></li>
-                <li><a href="#">Корзина</a></li>
-            </ul>
-        </nav>
-        <div class="buttons">
-            <div class="login-and-registration-button">
-                <a href="#">Вход</a>
-            </div>
-            <div class="login-and-registration-button">
-                <a href="#">Регистрация</a>
-            </div>
-        </div>
-        <!-- <div class="user-icon">
-            <a href="#"><img src="images/user-icon.png" alt="Иконка пользователя"></a>
-            <p><a href="#">Имя<br>пользователя</a></p>
-        </div>
-        -->
-    </header>
+    <?php include 'header.php'?>
     <section class="description-our-cafe">
-        <div class="darkening-the-image">
-            <img src="images/background-image-cat-description-our-cafe.png" alt="Кот в лежанке">
-            <h1>Переосмыслите идею </br>кафе-зоомагазина</h1>
-            <p>Побалуйте себя вкусными угощениями, общаясь со своими питомцами</br> в Pawffee, лучшем зоомагазине с кафе в Беларуси.</p>
+        <div class="description-text">
+            <!--<img src="images/background-image-cat-description-our-cafe.png" alt="Кот в лежанке">-->
+            <h1>Переосмыслите идею кафе-зоомагазина</h1>
+            <p>Побалуйте себя вкусными угощениями, общаясь со своими питомцами в Pawffee, лучшем зоомагазине с кафе в Беларуси.</p>
         </div>
     </section>
     <section class="our-advantages">
@@ -58,7 +36,7 @@
         <h1>О нашем кафе</h1>
         <ul>
             <li>
-                <p>Добро пожаловать в Pawfee, идеальное место для любителей домашних животных! 
+                <p>Добро пожаловать в Pawffee, идеальное место для любителей домашних животных!
                 Расположенный в городе Гродно Pawffee - это уникальный зоомагазин с уютным кафе, 
                 который предлагает восхитительные впечатления как для людей, так и для их пушистых компаньонов.</br></br>
                 В Pawffee мы понимаем особую связь между домашними животными и их владельцами и 
@@ -74,7 +52,7 @@
     <section class="photos-from-pawffee">
         <h1>Фотографии из нашего кафе</h1>
         <div class="photos-horizontal">
-            <img src="images/photos-from-pawffee/photo1.jpg"> <!--Дописать-->
+            <img src="images/photos-from-pawffee/photo1.jpg"> 
             <img src="images/photos-from-pawffee/photo2.jpg">
             <img src="images/photos-from-pawffee/photo3.jpg">
             <img src="images/photos-from-pawffee/photo4.jpg">
@@ -106,22 +84,13 @@
             </div>
         </div>
     </section>
-    <footer>
-        <div class="footer-element">
-            <h1>Pawffee</h1>
-            <h3>Насладитесь прекрасной атмосферой нашего кафе!</h3>
-        </div>
-        <div class="footer-element">
-            <h1>Адрес</h1>
-            <h3><a href="https://yandex.by/maps/10274/grodno/house/ZkoYfg9gSkACQFtpfXtzcHpnZg==/?ll=23.880703%2C53.721658&z=17.63">Улица Виктора Глухова, 22</a></h3>
-        </div>
-        <div class="footer-element">
-            <h1>Контакты</h1>
-            <div class="social-media-icons">
-                <a href="https://www.instagram.com/kotlesha/"><img src="images/icons/instagram.png" alt="Иконка инстаграма"></a>
-                <a href="https://t.me/Kotlesha"><img src="images/icons/telegram.png" alt="Иконка телеграмма"></a>
-            </div>
-        </div>
-    </footer>
+    <?php include 'footer.php'?>
+    <div class="chat-toggle" id="chat-toggle" onclick="toggleChat()">Открыть</div>
+    <div class="chat-container" id="chat-container" style="display: none;">
+        <div class="chat-box" id="chat-box"></div>
+        <input type="text" id="user-input" placeholder="Введите сообщение...">
+        <button onclick="sendMessage()">Отправить</button>
+    </div>
+    <script src="js/HomeScripts.js"></script>
 </body>
 </html>

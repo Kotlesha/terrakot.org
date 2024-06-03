@@ -1,10 +1,265 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/CatalogStyles.css">
+    <title>Каталог товаров</title>
 </head>
 <body>
-$END$
+    <!--
+    <?php
+    include('Header.php');
+    include "config/Database.php";
+    include "models/ProductModel.php";
+    $database = Database::getInstance();
+    $dbConnection = $database->getConnection();
+    ?>-->
+    <section class="catalog-description">
+        <div class="catalog-description-text">
+            <h1>Добро пожаловать в каталог товаров Pawffee</h1>
+            <h2>Здесь вы найдёте товары для себя и своего питомца</h2>
+        </div>
+    </section>
+    <section class="catalog">
+        <div class="navigation">
+            <a href="Home.php">Главная <span class="separator">></span></a> 
+            <a href="Catalog.php">Каталог товаров <span class="separator">></span></a>
+            <a href="#">Товары для животных <span class="separator">></span></a>
+            <a href="#">Товары для собак</a>
+        </div>
+        <h1 class="catalog-name">Товары для собак</h1>
+        <div class="products">
+            <div class="search-and-sort">
+                <div class="sort-options">
+                    <a href="AddProduct.php" class="accept">Добавить товар</a>
+                    <select class="sort">
+                        <option selected>По возрастанию цены</option>
+                        <option>По убыванию цены</option>
+                    </select>
+                <!--
+                <div class="dropdown">
+                    <p onclick="clickSortOptions()">Сортировка ▼</p>
+                    <div class="dropdown-content">
+                        <p>По возрастанию цены</p>
+                        <p>По убыванию цены</p>
+                    </div>
+                </div>-->
+                    <img onclick="selectDisplayMode(event)" id="gridIcon" src="images/icons/grid_icon_active.png">
+                    <img onclick="selectDisplayMode(event)" id="rowIcon" src="images/icons/row_icon_inactive.png">
+                </div>
+                <input type="text" class="search" placeholder="Поиск..." oninput="searchProducts(this)">
+            </div>
+            <div class="productsSection">
+                <!--
+                <?php
+                $query = "SELECT ProductId, ProductName, ProductDescription, ProductPrice, ProductImage FROM Products";
+                $database = Database::getInstance();
+                $dbConnection = $database->getConnection();
+                $stmt = $dbConnection->prepare($query);
+                $stmt->execute();
+                ?>-->
+                <div class="filtration">
+                    <h1>Фильтр</h1>
+                    <p>Цена:</p>
+                    <div class="priceInputes">
+                        <div>
+                            <input type="number" id="min-number" placeholder="0">
+                            <p>min</p>
+                        </div>
+                        <div>
+                            <input type="number" id="max-number" placeholder="800">
+                            <p>max</p>
+                        </div>
+                    </div>
+                    <button onclick="showError()" class="accept">Подтвердить</button>
+                    <div class="notification-panel" id="show-error"></div>
+                    <!--
+                    <div class="background-error-model" onclick="acceptError()">
+                        <div class="error-model">
+                            <h1>Ошибка!</h1>
+                            <p id="error-text"></p>
+                            <button class="accept" id="Ok" onclick="acceptError()">Ок</button>
+                        </div>
+                    </div>  -->            
+                </div>
+                <div class="information-about-products">
+                    <div class="product-cards">
+                        <!--
+                        <?php
+                            while($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                                echo '<div class="product-card">';
+                                echo '<div class="image-hover">';
+                                echo '<img src="data:image/jpeg;base64,' . base64_encode($row["ProductImage"]) . '" class="product-image">';
+                                echo '</div>';
+                                echo '<a href="#"><h1 class="product-name">' . $row["ProductName"] . '</h1></a>';
+                                echo '<p class="product-description">' . $row["ProductDescription"] . '</p>';
+                                echo '<div class="product-information">';
+                                echo '<p class="price-value">' . $row["ProductPrice"] . ' Br</p>';
+                                echo '<img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">';
+                                echo '<img class="shopping-bag-icon" src="images/icons/editIcon.png">';
+                                echo '</div>';
+                                echo '</div>';
+                            }
+                                ?>
+                            -->
+                            <div class="product-card">
+                                <div class="image-hover">
+                                    <img src="images/1.jpg" class="product-image">
+                                </div>
+                                <div>
+                                    <a href="#"><h1 class="product-name">Товар 1</h1></a>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                    </div>
+                    <div class="row-cards">
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                        <div class="row-card">
+                            <div class="main-block">
+                                <img class="product-image" src="images/product-cards/dog-bowl.jpg">
+                                <div class="product-information">
+                                    <p class="price-value">10.00 Br</p>
+                                    <div class="numeric-up-down">
+                                        <div class="triangle-left" onclick="decreaseValue(event)"></div>
+                                        <input class="number-input" type="number" min="1" max="10" value="1" step="1" readonly>
+                                        <div class="triangle-right" onclick="increaseValue(event)"></div>
+                                    </div>
+                                    <img class="shopping-bag-icon" src="images/icons/shopping-bag-active-icon.png" onclick="showNotification(event)">
+                                </div>
+                            </div>
+                            <div class="description-block">
+                                <a href="#"><h1 class="product-name">Миска для собаки</h1></a>
+                                <p class="product-description">Миска имеет вместительность 500 мл и подходит для собак малых и средних пород.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="products-not-found">
+                        <img src="images/icons/products-not-found.png">
+                        <h1>Товары не найдены</h1>
+                    </div>
+                    <div class="navigation-pages">
+                        <button class="back">Назад</button>
+                        <a>1</a>
+                        <a>2</a>
+                        <a>3</a>
+                        <a>4</a>
+                        <a>5</a>
+                        <button class="next">Вперёд</button>
+                    </div>
+                    <div class="notification-panel" id="notificationPanel"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="js/CatalogScripts.js"></script>
+    <!--<?php include 'footer.php'?>-->
 </body>
 </html>
